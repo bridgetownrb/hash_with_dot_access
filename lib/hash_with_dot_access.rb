@@ -5,7 +5,7 @@ module HashWithDotAccess
     def respond_to_missing?(key, *)
       return true if "#{key}".end_with?("=")
 
-      key?[key]
+      key?(key)
     end
 
     def method_missing(key, *args)
