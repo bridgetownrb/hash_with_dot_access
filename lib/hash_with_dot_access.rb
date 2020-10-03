@@ -13,6 +13,8 @@ module HashWithDotAccess
         self["#{key}".chop] = args.first
       elsif self.key?(key)
         self[key]
+      elsif default_proc
+        default_proc.call(self, key)
       else
         default
       end
