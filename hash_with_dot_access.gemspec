@@ -17,8 +17,8 @@ Gem::Specification.new do |spec|
   end
   spec.require_paths = ["lib"]
 
-  spec.add_runtime_dependency "activesupport",     [">= 5.0.0", "< 7.0"]
+  spec.add_runtime_dependency "activesupport",     [">= 5.0.0", "< 8.0"]
   
   spec.add_development_dependency "bundler"
-  spec.add_development_dependency "rake", "~> 12.0"
+  spec.add_development_dependency "rake", "~> 13.0"
 end
