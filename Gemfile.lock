@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    hash_with_dot_access (1.1.0)
+    hash_with_dot_access (1.2.0)
       activesupport (>= 5.0.0, < 8.0)
 
 GEM
