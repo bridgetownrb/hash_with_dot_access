@@ -6,9 +6,11 @@ Gem::Specification.new do |spec|
   spec.author        = "Bridgetown Team"
   spec.email         = "maintainers@bridgetownrb.com"
 
-  spec.summary       = %q{Subclass of HashWithIndifferentAccess which provides dot access via method_missing}
+  spec.summary       = %q{Performance-oriented subclass of Hash which provides symbolized keys and method access}
   spec.homepage      = "https://github.com/bridgetownrb/hash_with_dot_access"
   spec.license       = "MIT"
+
+  spec.required_ruby_version = ">= 3.1.0"
 
   # Specify which files should be added to the gem when it is released.
   # The `git ls-files -z` loads the files in the RubyGem that have been added into git.

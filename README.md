@@ -1,6 +1,8 @@
 # Hash with Dot Access
 
-Rails' ActiveSupport gem provides `HashWithIndifferentAccess` which allows you to access hash keys with either strings or symbols. This gem provides `HashWithDotAccess` which subclasses `HashWithIndifferentAccess` and allows you to access or set those keys using dot access (aka methods). It utilizes `method_missing` to access key data if available, and you can also set data using `keyname=`.
+This gem provides a Ruby `Hash` subclass which lets you access hash values with either string or symbol keys, as well as via methods (aka dot access). It utilizes `method_missing` to access key data if available, and you can also set data using `keyname=`. Our goal is on providing good performance and if anything offering a _subset_ of standard Hash functionality (it's a non-goal to add all-new Hash-related functionality to this class).
+
+Performance is improved over long-running processes (such as the build process of the [Bridgetown](https://www.bridgetownrb.com) framework) by automatically defining accessors on the class so that `method_missing` is only called once per key/accessor pair.
 
 ## Example
 
@@ -26,13 +28,17 @@ hsh[:d]
 hsh["d"]
 # => "Indeed!"
 
-hsh2 = {test: "dot access"}.with_dot_access
+# You can use the `as_dots` method on Hash by loading in our refinement.
+
+using HashWithDotAccess::Refinements
+
+hsh2 = {test: "dot access"}.as_dots
 hsh2.test
 # => "dot access"
 
 ## Nested hashes work too! Pairs nicely with lonely operator: &.
 
-nested = {a: 1, b: {c: 3}}.with_dot_access
+nested = {a: 1, b: {c: 3}}.as_dots
 nested.b.c
 # => 3
 
@@ -41,7 +47,7 @@ nested&.d&.e&.f
 
 ## You can also set default return values when key is missing
 
-hsh = {a: 1, b: 2}.with_dot_access
+hsh = {a: 1, b: 2}.as_dots
 hsh.default = 0
 hsh.a
 # => 1
@@ -63,12 +69,22 @@ Then simply require `hash_with_dot_access`:
 require "hash_with_dot_access"
 ```
 
+> [!IMPORTANT]
+> If you're upgrading from an earlier version, and you don't want to modify your code away from using `with_dot_access`, you can add a monkey-patch to `Hash`:
+> ```ruby
+> class Hash
+>   def with_dot_access
+>     HashWithDotAccess::Hash.new(self)
+>   end
+> end
+> ```
+
 ## Caveats
 
 As with any Ruby object which provides arbitrary data through dynamic method calls, you may encounter collisions between your key names and existing `Hash` methods. For example:
 
 ```ruby
-hsh = {each: "this won't work!"}.with_dot_access
+hsh = {each: "this won't work!"}.as_dots
 hsh.each
 # => #<Enumerator: {"each"=>"this won't work!"}:each>
 #
@@ -78,7 +94,7 @@ hsh.each
 Of course, the easy fix is to simply use standard ways of accessing hash data in these cases:
 
 ```ruby
-hsh = {each: "this will work!"}.with_dot_access
+hsh = {each: "this will work!"}.as_dots
 hsh[:each]
 # => "this will work!"
 ```
