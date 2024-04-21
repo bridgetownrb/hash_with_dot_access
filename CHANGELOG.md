@@ -1,5 +1,9 @@
 # Changelog
 
+## [2.1.1] - 2024-04-20
+
+- Fix issue where `to_h` was incorrectly mutating arrays containing hashes
+
 ## [2.1.0] - 2024-04-20
 
 - Adds conversion back to a hash with `to_h` and `to_dot_h` for enumeration.

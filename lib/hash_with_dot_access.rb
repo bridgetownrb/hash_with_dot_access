@@ -19,8 +19,7 @@ module HashWithDotAccess
       when ::Hash  
         value.to_h
       when Array
-        value = value.dup if value.frozen?
-        value.map! { primitive_value(_1) }
+        value.map { primitive_value(_1) }
       else
         value
       end
