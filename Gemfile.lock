@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    hash_with_dot_access (2.0.0)
+    hash_with_dot_access (2.1.0)
 
 GEM
   remote: https://rubygems.org/
@@ -15,3 +15,6 @@ DEPENDENCIES
   bundler
   hash_with_dot_access!
   rake (~> 13.0)
+
+BUNDLED WITH
+   2.5.6

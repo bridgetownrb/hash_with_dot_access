@@ -1,5 +1,9 @@
 # Changelog
 
+## [2.1.0] - 2024-04-20
+
+- Adds conversion back to a hash with `to_h` and `to_dot_h` for enumeration.
+
 ## [2.0.0] - 2024-04-20
 
 - Completely rewrite internals and remove Active Support as a dependency

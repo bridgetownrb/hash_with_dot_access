@@ -13,6 +13,18 @@ module HashWithDotAccess
         value
       end
     end
+
+    def self.primitive_value(value)
+      case value
+      when ::Hash  
+        value.to_h
+      when Array
+        value = value.dup if value.frozen?
+        value.map! { primitive_value(_1) }
+      else
+        value
+      end
+    end
   end
 
   class Hash < ::Hash
@@ -137,6 +149,20 @@ module HashWithDotAccess
 
     def compact
       dup.tap { _1.compact! }
+    end
+
+    alias_method :_to_h, :to_h
+
+    def to_dot_h(...)
+      self.class.new _to_h(...)
+    end
+
+    def to_h
+      ::Hash.new.update(self).to_h do |k, v|
+        value = Utils.primitive_value(v)
+        k, value = yield k, value if block_given?
+        [k, value]
+      end
     end
   end
 

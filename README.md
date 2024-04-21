@@ -55,6 +55,9 @@ hsh.x
 # => 0
 ```
 
+You can convert a `HashWithDotAccess::Hash` back to a regular Hash with `to_h`, which even works with
+block enumeration. Or use `to_dot_h` as a `to_h`-like enumerator which preserves dot access.
+
 ## Installation
 
 Add this line to your application's Gemfile:
